@@ -41,7 +41,7 @@ We provide our synthetic 3D-FRONT data rendering (RGB, rendered/predicted depth,
 ## Pretrained Checkpoint
 We also provide the checkpoints for scene scale, object pose, and shape diffusion models.
 | **Source Dataset** |                     |
-|--------------------|--------- -----------|
+|--------------------|-------------------|
 | Scale | [Joint category ldm model](https://syncandshare.lrz.de/getlink/fiEuyDe5EusDujuetyk9UN/scale) |
 | Pose | [Category-specific ldm model](https://syncandshare.lrz.de/getlink/fiSMR6RAwVS5ucGh2e9Mvu/pose) |
 | Shape | [Category-specific ldm model](https://syncandshare.lrz.de/getlink/fiEdb3iPSjPg8QdcAnJ7ou/shape) |
