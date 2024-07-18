@@ -1,0 +1,67 @@
+model:
+  base_learning_rate: 1.0e-04
+  target: models.diffusion.ddpm_shape.LatentDiffusion
+  params:
+    parameterization: x0
+    scale_by_std: False
+    linear_start: 0.0015
+    linear_end: 0.0195
+    num_timesteps_cond: 1
+    log_every_t: 200
+    timesteps: 1000
+    first_stage_key: latent_gt
+    cond_stage_trainable: True
+    conditioning_key: crossattn
+    cond_stage_key: nocs_pc
+    monitor: val/ChamferDistance_L1
+
+    unet_config:
+      target: modules.diffusionmodules.openaimodel_shape.UNetModel
+      params:
+        image_size: 1
+        in_channels: 256
+        out_channels: 256
+        model_channels: 256
+        attention_resolutions:
+        - 1
+        num_res_blocks: 2
+        channel_mult:
+        - 1
+        num_heads: 8
+        resblock_updown: False
+        use_spatial_transformer: true
+        transformer_depth: 1
+        context_dim: 512
+        legacy: False
+
+    first_stage_config:
+      target: models.latentloader.IdentityFirstStage
+
+    cond_stage_config: 
+      target: models.pointembed.PointEmbed
+
+
+
+data:
+  target: train_shape.DataModuleFromConfig
+  params:
+    batch_size: 2
+    num_workers: 8
+    wrap: false
+    train:
+      target: data.shape.DiffCADshapeTrain
+    validation:
+      target: data.shape.DiffCADshapeValidation
+  
+lightning:
+  callbacks:
+    image_logger:
+      target: train_shape.ImageLogger
+      params:
+        batch_frequency: 100
+        increase_log_steps: False
+
+  trainer:
+    max_epochs: 500
+    benchmark: True
+    max_steps: 

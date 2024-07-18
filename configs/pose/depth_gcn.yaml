@@ -1,0 +1,70 @@
+model:
+  base_learning_rate: 5.0e-05
+  target: models.diffusion.ddpm_pose.LatentDiffusion
+  params:
+    parameterization: eps
+    scale_by_std: False
+    linear_start: 0.0015
+    linear_end: 0.0195
+    num_timesteps_cond: 1
+    log_every_t: 200
+    timesteps: 1000
+    first_stage_key: nocs_gt
+    cond_stage_trainable: True
+    conditioning_key: concat
+    cond_stage_key: depth_input
+    monitor: val/nocs_diff
+    
+    unet_config:
+      target: modules.diffusionmodules.openaimodel_pose.UNetModel
+      params:
+        image_size: 1024
+        in_channels: 1283
+        out_channels: 3
+        model_channels: 256
+        dropout: 0.0
+        attention_resolutions:
+        - 4
+        - 2
+        - 1
+        num_res_blocks: 2
+        channel_mult:
+        - 1
+        - 2
+        - 4
+        num_heads: 8
+        resblock_updown: False
+        use_spatial_transformer: False
+        transformer_depth: 
+        context_dim: 
+
+    first_stage_config:
+      target: models.latentloader.IdentityFirstStage
+    cond_stage_config:
+      target: models.gcn3d.GCN3D
+      
+
+
+data:
+  target: train_pose.DataModuleFromConfig
+  params:
+    batch_size: 2
+    num_workers: 8
+    wrap: false
+    train:
+      target: data.pose.DiffCADposeTrain
+    validation:
+      target: data.pose.DiffCADposeValidation
+  
+lightning:
+  callbacks:
+    image_logger:
+      target: train_pose.ImageLogger
+      params:
+        batch_frequency: 100
+        increase_log_steps: False
+
+  trainer:
+    max_epochs: 1001
+    benchmark: True
+    max_steps: 

@@ -1,0 +1,60 @@
+model:
+  base_learning_rate: 5.0e-05
+  target: models.diffusion.ddpm_scale.LatentDiffusion
+  params:
+    parameterization: eps
+    scale_by_std: false
+    linear_start: 0.0015
+    linear_end: 0.0195
+    num_timesteps_cond: 1
+    log_every_t: 200
+    timesteps: 1000
+    first_stage_key: depth_scale_img
+    cond_stage_trainable: True
+    conditioning_key: concat
+    cond_stage_key: depth_input
+    monitor: val/scale_diff
+    unet_config:
+      target: modules.diffusionmodules.openaimodel_scale.UNetModel
+      params:
+        image_size: [30, 40]
+        in_channels: 129
+        out_channels: 1
+        model_channels: 128
+        dropout: 0.1
+        attention_resolutions:
+        - 1
+        num_res_blocks: 2
+        channel_mult:
+        - 1
+        num_heads: 2
+        use_spatial_transformer: false
+        transformer_depth: null
+        context_dim: null
+    first_stage_config:
+      target: models.latentloader.IdentityFirstStage
+    cond_stage_config:
+      target: models.unet_feature.FeatureCondStage
+data:
+  target: train_scale.DataModuleFromConfig
+  params:
+    batch_size: 8
+    num_workers: 8
+    wrap: false
+    train:
+      target: data.scale_joint.DiffCADscaleTrain
+    validation:
+      target: data.scale_joint.DiffCADscaleValidation
+
+lightning:
+  callbacks:
+    image_logger:
+      target: train_scale.ImageLogger
+      params:
+        batch_frequency: 200
+        increase_log_steps: False
+
+  trainer:
+    max_epochs: 1001
+    benchmark: True
+    max_steps: 
