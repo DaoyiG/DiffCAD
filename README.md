@@ -49,23 +49,29 @@ We also provide the checkpoints for scene scale, object pose, and shape diffusio
 
 ## Training
 For scene scale:
+
 ```python train_scale.py --base=configs/scale/depth_feat.yaml -t --gpus=0, --logdir=logs```
 
 For object NOCs:
+
 ```python train_pose.py --base=configs/pose/depth_gcn.yaml -t --gpus=0, --logdir=logs```
 
 For object latents:
+
 ```python train_shape.py --base=configs/shape/nocs_embed.yaml -t --gpus=0, --logdir=logs```
 
 
 ## Inference
 For scene scale sampling:
+
 ```python scripts/generate_multi_scale_candidates.py```
 
 For object NOCs generation:
+
 ```python scripts/generate_multi_nocs_candidates.py```
 
 For object latent sampling:
+
 ```python scripts/retrieval_from_nocs.py```
 
 ## BibTeX
