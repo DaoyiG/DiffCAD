@@ -72,7 +72,7 @@ For object NOCs generation:
 
 For object latent sampling:
 
-```python scripts/retrieval_from_nocs.py```
+```python scripts/generate_multi_shape_candidates.py```
 
 ## BibTeX
 
