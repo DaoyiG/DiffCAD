@@ -33,7 +33,7 @@ We provide our synthetic 3D-FRONT data rendering (RGB, rendered/predicted depth,
 | [Object Meshes](https://syncandshare.lrz.de/getlink/fiQWpWzs5qSeXrt2JStEbT/Mesh)  | Canonicalized and watertighted mesh of ShapeNet and 3D-FUTURE. |
 | [Object Meshes - AUG](https://syncandshare.lrz.de/getlink/fiAhSmZduitQM8FeLEU4Yy/Mesh-AUG)  | ShapeNet object but scaled by its NN 3DF object scale, which we use to augment the synthetic dataset. |
 | [Object Latents](https://syncandshare.lrz.de/getlink/fi53KQjYS2MJgKdgc3zzAo/Latents) |  Encoded object latents for retrieval. |
-| [Val ScanNet25k](https://syncandshare.lrz.de/getlink/fiKQasexdTsyRfqQV6YQSU/Scan2CAD_processed) | Predict depth, and masks on the validation set. |
+| [Val ScanNet25k](https://syncandshare.lrz.de/getlink/fiKQasexdTsyRfqQV6YQSU/Scan2CAD_processed) | Predict depth, GT and predicted masks, CAD pools, pose gts on the validation set. |
 | [ScanNet25k data](https://drive.google.com/drive/folders/1JbPidWsfcLyUswYQsulZN8HDFBTdoQog) | The processed data from [ROCA](https://github.com/cangumeli/ROCA) |
 
 
